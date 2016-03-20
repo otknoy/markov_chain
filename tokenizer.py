@@ -1,7 +1,10 @@
 #!/usr/bin/env python
 import MeCab
 
-def tokenize(text):
+# noun_posid_list = range(36, 67+1)
+noun_posid_list = range(41, 47+1)
+
+def tokenize(text, only_noun=False):
     '''
     tokenize a text using MeCab with mecab-ipadic-neologd
     '''
@@ -12,7 +15,11 @@ def tokenize(text):
 
     terms = []
     while node:
-        terms.append(node.surface)
+        if only_noun:
+            if node.posid in noun_posid_list:
+                terms.append(node.surface)
+        else:
+            terms.append(node.surface)
 
         node = node.next
 
